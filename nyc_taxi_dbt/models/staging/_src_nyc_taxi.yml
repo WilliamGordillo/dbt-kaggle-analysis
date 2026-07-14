@@ -1,0 +1,16 @@
+sources:
+  - name: nyc_taxi
+    database: nyc_taxi
+    schema: raw
+    tables:
+      - name: yellow_tripdata
+        config:
+          freshness:
+            warn_after:
+              count: 36500
+              period: day
+            error_after:
+              count: 50000
+              period: day
+          
+          loaded_at_field: tpep_pickup_datetime
