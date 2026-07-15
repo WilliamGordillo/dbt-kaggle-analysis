@@ -4,4 +4,11 @@ sources:
     schema: raw
     tables:
       - name: yellow_tripdata
-    
+        columns:
+          - name: VendorID
+            quote: true
+            data_tests:
+              - not_null
+              - accepted_values:
+                  arguments:
+                    values: [1, 2]
