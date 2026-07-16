@@ -1,0 +1,15 @@
+models:
+  - name: int_trips_time_buckets
+    columns:
+      - name: pickup_dow_name
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+      - name: pickup_time_bucket
+        data_tests:
+          - not_null
+      - name: pickup_hour
+        data_tests:
+          - not_null
