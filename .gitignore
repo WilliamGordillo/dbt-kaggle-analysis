@@ -431,3 +431,5 @@ FodyWeavers.xsd
 # Don't include raw data in repo
 
 *.parquet
+
+to_do.md
