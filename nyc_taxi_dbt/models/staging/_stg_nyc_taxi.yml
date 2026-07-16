@@ -1,5 +1,5 @@
 models:
-  - name: stg_test
+  - name: stg_yellow_trips
     columns:
       - name: vendorid
         description: '{{doc("stg_docs")}}'
@@ -9,5 +9,17 @@ models:
               arguments:
                 values: [1, 2]
       - name: fare_amount
+        data_tests:
+          - not_null
+      - name: trip_distance
+        data_tests:
+          - not_null
+      - name: payment_type
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Flex Fare trip','Credit Card', 'Cash', 'No Charge', 'Dispute', 'Unknown']
+      - name: pickup_datetime
         data_tests:
           - not_null
