@@ -23,5 +23,6 @@ SELECT *,
             WHEN date_part('hour', pickup_datetime) BETWEEN 16 AND 19 THEN 'Evening Rush'
             WHEN date_part('hour', pickup_datetime) BETWEEN 20 AND 23 THEN 'Night'
             ELSE 'Off Peak'
-        END AS pickup_time_bucket
+        END AS pickup_time_bucket,
+        {{ get_duration_minutes( 'pickup_datetime','dropoff_datetime') }} AS trip_duration
 FROM trips
