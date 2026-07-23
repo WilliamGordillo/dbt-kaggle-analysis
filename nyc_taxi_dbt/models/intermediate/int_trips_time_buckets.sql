@@ -1,9 +1,12 @@
 WITH trips AS(
     SELECT *
     FROM {{ ref('stg_yellow_trips') }}
+),
+taxi_zones AS(
+    select * from {{ ref('taxi_zones') }}
 )
 
-SELECT *,
+SELECT t.*,
         date_part( 'hour', pickup_datetime) AS pickup_hour,
         date_part( 'hour', dropoff_datetime) AS dropoff_hour,
         date_part( 'dow', pickup_datetime) AS pickup_dow,
@@ -24,5 +27,12 @@ SELECT *,
             WHEN date_part('hour', pickup_datetime) BETWEEN 20 AND 23 THEN 'Night'
             ELSE 'Off Peak'
         END AS pickup_time_bucket,
-        {{ get_duration_minutes( 'pickup_datetime','dropoff_datetime') }} AS trip_duration
-FROM trips
+        {{ get_duration_minutes( 'pickup_datetime','dropoff_datetime') }} AS trip_duration,
+        pickup.Borough AS pickup_borough,
+        dropoff.Borough AS dropoff_borough,
+        pickup.Zone AS pickup_zone,
+        dropoff.Zone AS dropoff_zone
+FROM trips AS t
+
+    left join taxi_zones as pickup on t.pickup_location_id = pickup.LocationID
+    left join taxi_zones as dropoff on t.dropoff_location_id = dropoff.LocationID

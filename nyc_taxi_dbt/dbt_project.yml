@@ -35,3 +35,18 @@ models:
       +materialized: view
    # marts:
       #+materialized: table
+
+seeds:
+  nyc_taxi_dbt:
+    taxi_zones:
+      +column_types:
+        objectid: bigint
+        shape_leng: double precision
+        shape_area: double precision
+        zone: varchar
+        locationid: bigint
+        borough: varchar
+        geometry: varchar
+        centroids: varchar
+        centroids_x: double precision
+        centroids_y: double precision
