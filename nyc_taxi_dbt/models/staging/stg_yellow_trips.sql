@@ -46,6 +46,21 @@ renamed as (
 
     from source
 
-)
+),
+deduped as (
+    select *,
+        row_number() over (
+            partition by pickup_datetime, dropoff_datetime, vendorid
+            order by total_amount desc
+        ) as row_num
+    from renamed
+),
 
-select * from renamed
+final as (
+    select
+        {{ dbt_utils.generate_surrogate_key(['pickup_datetime', 'dropoff_datetime', 'vendorid']) }} as trip_id,
+        *
+    from deduped
+    where row_num = 1
+)
+select * from final

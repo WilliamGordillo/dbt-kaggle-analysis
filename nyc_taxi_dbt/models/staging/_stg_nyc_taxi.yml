@@ -1,6 +1,11 @@
 models:
   - name: stg_yellow_trips
     columns:
+      - name: trip_id
+        description: 'Primary key for the table'
+        data_tests:
+          - unique
+          - not_null
       - name: vendorid
         description: '{{doc("stg_docs")}}'
         data_tests:

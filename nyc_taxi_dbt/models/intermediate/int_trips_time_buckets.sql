@@ -1,5 +1,5 @@
 WITH trips AS(
-    SELECT *
+    SELECT {{ dbt_utils.star(from=ref('stg_yellow_trips'), except=[row_num ]) }}
     FROM {{ ref('stg_yellow_trips') }}
 ),
 taxi_zones AS(
